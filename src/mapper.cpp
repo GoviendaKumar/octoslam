@@ -42,6 +42,47 @@ void print_query_info(point3d query, OcTreeNode* node) {
     cout << "occupancy probability at " << query << ":\t is unknown" << endl;    
 }
 
+/*void bt_file_publisher(){
+
+  ros::AsyncSpinner spinner(1);
+  ros::NodeHandle nh;
+
+  std::cout<<"Reading File"<<std::endl;
+  
+  octomap::OcTree* octree = new octomap::OcTree("result_tree.bt");
+  std::cout << "File Read Sccessfully" << std::endl;
+
+  octomap_msgs::Octomap bmap_msg;
+  octomap_msgs::binaryMapToMsg(*octree, bmap_msg);
+  ros::Publisher octomap_publisher = nh.advertise<octomap_msgs::Octomap>("display_env",1);
+
+  octomap_publisher.publish(bmap_msg);
+  cout << "published from file.bt..." << endl;
+
+}*/
+
+void octomap_publisher(OcTree* octree){
+  cout << "========================" << endl;
+  ros::AsyncSpinner spinner(1);
+  ros::NodeHandle nh;
+
+  for(octomap::OcTree::leaf_iterator it = octree->begin_leafs(),
+        end=octree->end_leafs(); it!= end; ++it)
+    { 
+        std::cout << "Node center: " << it.getCoordinate();
+        std::cout << " value: " << it->getValue() << "\n";
+    }
+  
+  octomap_msgs::Octomap bmap_msg;
+  octomap_msgs::binaryMapToMsg(*octree, bmap_msg);
+
+  ros::Publisher octomap_publisher = nh.advertise<octomap_msgs::Octomap>("display_env",1);
+
+  octomap_publisher.publish(bmap_msg);
+  cout << "Published" << endl;
+
+}
+
 void print_map(OcTree* tree){
   cout << endl;
   cout << "generating result map" << endl;  
@@ -61,6 +102,8 @@ void octreeCallback(const octomap_msgs::Octomap::ConstPtr& octomap_msg)
 
   print_map(octree);
   cout << "printed..." << endl;
+  //bt_file_publisher();
+  octomap_publisher(octree);
   sub.shutdown();
 }
 
