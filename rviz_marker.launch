@@ -1,6 +1,0 @@
-<launch>
-<!-- start rviz -->
-  <node pkg="rviz" type="rviz" name="my_octree" 
-    args="-d $(find octoslam)/marker.rviz"/>
-<!-- </node> -->
-</launch>
