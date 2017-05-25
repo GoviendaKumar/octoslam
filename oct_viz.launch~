@@ -1,0 +1,5 @@
+<launch>
+<node name="mapper" pkg="octoslam" type="mapper"/>
+<!-- start rviz -->
+<node pkg="rviz" type="rviz" name="rviz" args="-d $(find octoslam)/marker.rviz"/>
+</launch>

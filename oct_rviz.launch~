@@ -1,0 +1,15 @@
+<launch>
+
+<!-- start mapper -->
+<node name="mapper" pkg="octoslam" type="mapper"/>
+
+<!-- start octree_creator -->
+<node name="octree_creator" pkg="octoslam" type="octree_creator"/>
+
+<!-- start pc_reader_publisher -->
+<!-- <node name="pc_reader_publisher" pkg="octoslam" type="pc_reader_publisher"/> -->
+
+<!-- start rviz -->
+<node pkg="rviz" type="rviz" name="rviz"/>
+
+</launch>
